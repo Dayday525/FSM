@@ -1,0 +1,163 @@
+有限状态机,也称为FSM(Finite State Machine)，其在任意时刻都处于有限状态集合中的某一状态。当其获得一个输入字符时，将从当前状态转换到另一个状态，
+或者仍然保持在当前状态。任何一个FSM都可以用状态转换图来描述，图中的节点表示FSM中的一个状态，有向加权边表示输入字符时状态的变化。
+如果图中不存在与当前状态与输入字符对应的有向边，则FSM将进入“消亡状态(Doom State)”，此后FSM将一直保持“消亡状态”。
+状态转换图中还有两个特殊状态：状态1称为“起始状态”，表示FSM的初始状态。状态6称为“结束状态”，表示成功识别了所输入的字符序列。
+
+在启动一个FSM时，首先必须将FSM置于“起始状态”，然后输入一系列字符，最终，FSM会到达“结束状态”或者“消亡状态”。
+
+状态机的要素
+
+状态机可归纳为4个要素，即现态、条件、动作、次态。“现态”和“条件”是因，“动作”和“次态”是果。
+
+现态：是指当前所处的状态。
+条件：又称为“事件”。当一个条件被满足，将会触发一个动作，或者执行一次状态的迁移。
+动作：条件满足后执行的动作。动作执行完毕后，可以迁移到新的状态，也可以仍旧保持原状态。动作不是必需的，当条件满足后，也可以不执行任何动作，
+      直接迁移到新状态。
+次态：条件满足后要迁往的新状态。“次态”是相对于“现态”而言的，“次态”一旦被激活，就转变成新的“现态”了。
+#include "stdio.h"
+#include "window.h"
+int g_max_num;
+//定义状态
+enum{
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+};
+//定义触发的条件
+enum{
+  EVENT1 = 1;
+  EVENT2;
+  EVENT3;
+  EVENT4;
+  EVENT5;
+  EVENT6;
+  EVENT7;
+};
+//定义状态表的数据结构
+Typedef Struct FsmTable_s
+{
+  int Event;
+  int CurState;
+  void (*eventActFun)();
+  int NextState;
+}FsmTable_t;
+//
+Typedef Struct FSM_S
+{
+  FsmTable_t *FsmTable;
+  int CurState ;
+}FSM_t;
+//注册状态机的状态
+void Fsm_Regist(FSM_t *pFSM, FsmTable_t *pTable)
+{
+  pFSM->FsmTable = pTable;
+}
+//注册状态机的转移
+void Fsm_StateTransfer(FSM_t *pFSM, int state)
+{
+  pFSM->FsmTable = state;
+}
+//事件处理
+void FSM_EventHandle(FSM_t *pFSM, int event)
+{
+  FsmTable_t *pAvtTable = pFSM->FsmTable;
+  void (*eventACTFUN)() = NULL;
+  int NextState;
+  int CurState = pFSM->CurState;
+  int flag = 0;
+  for(int i = 0;i < g_max_num ;i++)
+  {
+    if(event == pActTable[i].event && CurState == pActTable[i].CurState)
+    {
+      flag = 1;
+      eventActFun = pActTable[i].eventActFun;
+      NextState = pActTable[i].NextState;
+      break;
+    }
+  }
+  if(flag)
+  {
+    if(eventActFun)
+    {
+      EventActFun();
+    }
+    Fsm_StateTransfer(pFSM,NextState);
+  }
+  else{
+  };
+}
+void GetMonday()
+{
+  printf("我是周一");
+}
+void GetTuesday()
+{
+  printf("我是周二");
+}
+void GetWednesday()
+{
+  printf("我是周三");
+}void GetThursday()
+{
+  printf("我是周四");
+}void GetFriday()
+{
+  printf("我是周五");
+}void GetSaturday()
+{
+  printf("我是周六");
+}void GetSunday()
+{
+  printf("我是周日");
+}
+
+FsmTable_t Table[] = 
+{
+    {EVENT1, Monday,    GetMonday,    Tuesday},
+    {EVENT2, Tuesday,   GetTuesday,   Wednesday},
+    {EVENT3, Wednesday, GetWednesday, Thursday},
+    {EVENT4, Thursday,  GetThursday,  Friday},
+    {EVENT5, Friday,    GetFriday,    Saturday},
+    {EVENT6, Saturday,  GetSaturday,  Sunday},
+    {EVENT7, Sunday,    GetSunday,    Monday},
+}
+//初始化状态机
+void InitFSM(FSM_t *pFSM)
+{
+  g_max_num = sizeof(table)/sizeof(FsmTable_t);
+  pFSM->CurState = Monday;
+  FSM_Regist(pFSM,Table);
+}
+//
+void Polling_day(int *event)
+{
+  if(*event == 7)
+  {
+    *event = 1;
+  }
+  else{
+    (*event)++;
+  }
+}
+void main()
+{
+  FSM_t fsm;
+  InitFSM(&fsm);
+  int event = EVENT1;
+  while(1)
+  {
+    printf("event %d is coming...\n",event);
+    FSM_EventHandle(&fsm,event);
+    printf("fsm current state %d\n",fsm.CurState);
+    Polling_day(&event);
+    Sleep(2000);
+  }
+}
+
+
+
+
