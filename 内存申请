@@ -1,0 +1,30 @@
+C语言中常用的几个内存申请函数：
+
+void* malloc(unsigned size); 
+void* realloc(void* ptr, unsigned newsize); 
+void* calloc(size_t numElements, size_t sizeOfElement);
+
+以上函数都在头文件stdlib.h中定义，因此使用时必须导入该头文件。
+
+malloc： 
+一般我们在平常写代码中用得最多的就是malloc函数了，其参数size是需要申请的内存长度，单位为字节，如果申请失败则返回NULL，
+否则返回申请到连续内存块的首地址，需要将返回的首地址指针强制转换成目标类型的指针。如：
+char *p = (char*)malloc(10);
+
+realloc： 
+realloc是给一个已经申请了内存的指针重新分配内存，即当一个指针指向的内存块不够或有多余时可以使用realloc为其重新分配合适大小的内存，
+相对于可以根据需要调整内存块的大小。参数ptr为原有的空间地址,newsize是重新申请的地址长度。 
+如：
+char *p = (char *)malloc(10);
+p = realloc(p, 20);
+最终p指向的地址可能不变，也可能变了，但是p指向的内存块大小变大了，而且p原来内存块内的内容不变。 
+(重新分配内存后p指向的地址可能会变，变不变是根据实际情况而定的，如果重新分配的内存比原来的大，而且在内存中原来内存块紧跟着的后面有
+足够的空闲空间可供分配，则p的首地址不变，如果内存中原来内存块紧跟着的后面没有足够的空间可供分配，则系统会从其他地方寻找一段足够大
+的空闲空间来分配给p，这种情况下p指向的地址就会改变了，原因就是因为不管是malloc还是realloc，其申请的内存块都必须是连续的)。
+
+calloc： 
+calloc跟malloc差不多，但calloc比malloc多做了一步操作，就是将申请到的内存块全部初始化为0。参数numElements表示元素个数，
+sizeOfElement表示每个元素的大小，即calloc申请的内存块大小是numElements * size_t sizeOfElement 字节。
+以上函数都是从堆上申请内存，所以需要程序猿自己释放内存，释放内存：
+
+free(void*ptr);
