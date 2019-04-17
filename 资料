@@ -39,3 +39,6 @@ http://arduino.esp8266.com/stable/package_esp8266com_index.json
 https://bitbucket.org/pygame/pygame/downloads/
 http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame
 blog.csdn.net/wzz4420381/article/details/74838001
+
+错误	1	error LNK2019: 无法解析的外部符号 "void __cdecl int_swap_test(int *,int *)" (?int_swap_test@@YAXPAH0@Z)，该符号在函数 "private: virtual void __thiscall IntSwapTest_paramError_Test::TestBody(void)" (?TestBody@IntSwapTest_paramError_Test@@EAEXXZ) 中被引用	C:\Users\yumingliang\Desktop\vs\unit_test_demo2\test.obj	unit_test_demo2
+
