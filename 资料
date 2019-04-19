@@ -42,3 +42,4 @@ blog.csdn.net/wzz4420381/article/details/74838001
 
 错误	1	error LNK2019: 无法解析的外部符号 "void __cdecl int_swap_test(int *,int *)" (?int_swap_test@@YAXPAH0@Z)，该符号在函数 "private: virtual void __thiscall IntSwapTest_paramError_Test::TestBody(void)" (?TestBody@IntSwapTest_paramError_Test@@EAEXXZ) 中被引用	C:\Users\yumingliang\Desktop\vs\unit_test_demo2\test.obj	unit_test_demo2
 https://docs.microsoft.com/zh-cn/previous-versions/visualstudio/visual-studio-2010/5ske5b71(v%3dvs.100)
+https://github.com/ninja-build/ninja/releases
